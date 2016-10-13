@@ -1,13 +1,14 @@
 import omit from 'lodash/omit'
 
-export default function merge (config1, config2) {
-  const inlinedConfig1 = inlineConfig(normalizeConfig(config1))
-  const inlinedConfig2 = inlineConfig(normalizeConfig(config2))
+export default function merge (configA, configB) {
+  const inlinedConfigA = inlineConfig(normalizeConfig(configA))
+  const inlinedConfigB = inlineConfig(normalizeConfig(configB))
 
   return {
-    ...inlinedConfig1,
-    ...inlinedConfig2,
-    rules: mergeRules(inlinedConfig1.rules, inlinedConfig2.rules)
+    ...inlinedConfigA,
+    ...inlinedConfigB,
+    env: mergeEnvs(configA.env, configB.env),
+    rules: mergeRules(inlinedConfigA.rules, inlinedConfigB.rules)
   }
 }
 
@@ -24,16 +25,24 @@ function resolvePlugin (pluginName) {
   return require(normalizePluginName(pluginName))
 }
 
-function mergeRules (rules1, rules2) {
+function mergeEnvs (envA, envB) {
   return {
-    ...rules1,
-    ...rules2
+    ...envA,
+    ...envB
+  }
+}
+
+function mergeRules (rulesA, rulesB) {
+  return {
+    ...rulesA,
+    ...rulesB
   }
 }
 
 function normalizeConfig (config) {
   return {
     ...config,
+    env: config.env || {},
     plugins: config.plugins || [],
     rules: config.rules || {}
   }
