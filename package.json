@@ -1,0 +1,36 @@
+{
+  "name": "merge-eslint-configs",
+  "version": "1.0.0",
+  "description": "Merges and inlines ESLint configs to simplify ESLint plugin development and consumption.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:lint && npm run test:unit",
+    "test:lint": "standard .",
+    "test:unit": "jest"
+  },
+  "keywords": [
+    "eslint"
+  ],
+  "author": "Andrew Hutchings <andrew.hutchings@gmail.com> (https://andrewhutchings.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "jest": "^16.0.1",
+    "standard": "^8.4.0"
+  },
+  "babel": {
+    "presets": [
+      "stage-0",
+      "latest"
+    ]
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
+  "dependencies": {
+    "lodash": "^4.16.4"
+  }
+}
