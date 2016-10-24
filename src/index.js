@@ -26,7 +26,7 @@ function inlineConfigAtPath(config, cwd) {
 }
 
 function inlineExtendsPathAtPath(extendsPath, cwd) {
-  const config = requireConfig(extendsPath, cwd)
+  const config = requireConfig(normalizeExtendsName(extendsPath), cwd)
   const extendsCwd = path.join(cwd, extendsPath)
   return inlineConfigAtPath(config, extendsCwd)
 }
@@ -87,7 +87,17 @@ function normalizeConfig (config) {
   }
 }
 
+function normalizeExtendsName (extendsName) {
+  if (isRelativePath(extendsName)) return extendsName
+  if (extendsName.startsWith('eslint-config-')) return extendsName
+  return `eslint-config-${extendsName}`
+}
+
 function normalizePluginName (pluginName) {
   if (pluginName.startsWith('eslint-plugin-')) return pluginName
   return `eslint-plugin-${pluginName}`
+}
+
+function isRelativePath(path) {
+  return path.startsWith('./')
 }

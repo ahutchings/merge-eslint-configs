@@ -71,3 +71,31 @@ it('should merge env', () => {
 
   expect(actual).toEqual(expected)
 })
+
+it('should inline a module referenced in extends', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module'));
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {
+      'no-cond-assign': 'error'
+    }
+  }
+
+  expect(actual).toEqual(expected)
+})
+
+it('should inline a module referenced in extends using a short name', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module-short-name'));
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {
+      'no-cond-assign': 'error'
+    }
+  }
+
+  expect(actual).toEqual(expected)
+})
