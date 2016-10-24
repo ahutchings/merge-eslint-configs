@@ -2,6 +2,7 @@
   "name": "inline-eslint-config",
   "version": "1.0.0",
   "description": "Inlines an ESLint config object to simplify ESLint plugin development and consumption.",
+  "repository": "skateshop/inline-eslint-config",
   "main": "index.js",
   "scripts": {
     "test": "npm run test:lint && npm run test:unit",
