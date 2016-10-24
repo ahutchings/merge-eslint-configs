@@ -26,8 +26,10 @@ function inlineConfigAtPath(config, cwd) {
 }
 
 function inlineExtendsPathAtPath(extendsPath, cwd) {
-  const config = requireConfig(normalizeExtendsName(extendsPath), cwd)
-  const extendsCwd = path.join(cwd, extendsPath)
+  const normalizedPath = normalizeExtendsName(extendsPath)
+  const resolvedPath = resolveConfig(normalizedPath, cwd)
+  const config = requireConfig(normalizedPath, cwd)
+  const extendsCwd = path.dirname(resolvedPath)
   return inlineConfigAtPath(config, extendsCwd)
 }
 

@@ -99,3 +99,18 @@ it('should inline a module referenced in extends using a short name', () => {
 
   expect(actual).toEqual(expected)
 })
+
+it('should inline nested modules referenced in extends', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module-nested'));
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {
+      'no-cond-assign': 'error',
+      'no-console': 'error'
+    }
+  }
+
+  expect(actual).toEqual(expected)
+})
