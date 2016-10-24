@@ -1,9 +1,11 @@
-import merge from '../'
+import path from 'path';
+import inline from '../'
 
-it('should merge empty configs', () => {
-  const actual = merge({}, {})
+it('should inline an empty config', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/empty'));
   const expected = {
     env: {},
+    extends: [],
     plugins: [],
     rules: {}
   }
@@ -11,18 +13,11 @@ it('should merge empty configs', () => {
   expect(actual).toEqual(expected)
 })
 
-it('should merge configs with no overlapping rules', () => {
-  const actual = merge({
-    rules: {
-      'no-cond-assign': 'error'
-    }
-  }, {
-    rules: {
-      'no-console': 'error'
-    }
-  })
+it('should inline configs with no overlapping rules', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/no-overlapping-rules'));
   const expected = {
     env: {},
+    extends: [],
     plugins: [],
     rules: {
       'no-cond-assign': 'error',
@@ -34,21 +29,10 @@ it('should merge configs with no overlapping rules', () => {
 })
 
 it('should inline a plugin', () => {
-  jest.mock('eslint-plugin-myplugin', () => {
-    return {
-      rules: {
-        'no-cond-assign': 'error'
-      }
-    }
-  }, {virtual: true})
-
-  const actual = merge({
-    plugins: [
-      'eslint-plugin-myplugin'
-    ]
-  }, {})
+  const actual = inline(path.join(__dirname, 'fixtures/plugin'));
   const expected = {
     env: {},
+    extends: [],
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
@@ -59,21 +43,10 @@ it('should inline a plugin', () => {
 })
 
 it('should inline a plugin with short name', () => {
-  jest.mock('eslint-plugin-myplugin', () => {
-    return {
-      rules: {
-        'no-cond-assign': 'error'
-      }
-    }
-  }, {virtual: true})
-
-  const actual = merge({
-    plugins: [
-      'myplugin'
-    ]
-  }, {})
+  const actual = inline(path.join(__dirname, 'fixtures/plugin-short-name'));
   const expected = {
     env: {},
+    extends: [],
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
@@ -84,21 +57,14 @@ it('should inline a plugin with short name', () => {
 })
 
 it('should merge env', () => {
-  const actual = merge({
-    env: {
-      node: true,
-      es6: false
-    }
-  }, {
-    env: {
-      es6: true
-    }
-  })
+  const actual = inline(path.join(__dirname, 'fixtures/env'));
   const expected = {
     env: {
       node: true,
-      es6: true
+      es6: false,
+      mocha: true
     },
+    extends: [],
     plugins: [],
     rules: {}
   }

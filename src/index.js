@@ -1,28 +1,66 @@
-import omit from 'lodash/omit'
+import path from 'path'
+import relative from 'require-relative'
 
-export default function merge (configA, configB) {
-  const inlinedConfigA = inlineConfig(normalizeConfig(configA))
-  const inlinedConfigB = inlineConfig(normalizeConfig(configB))
+const emptyConfig = normalizeConfig({})
+
+export default function inlineRootConfigAtPath(configPath) {
+  const resolvedPath = resolveConfig(configPath)
+  const config = requireConfig(resolvedPath)
+  const cwd = path.dirname(resolvedPath)
+
+  return inlineConfigAtPath(config, cwd)
+}
+
+function inlineConfigAtPath(config, cwd) {
+  if (config.extends.length === 0 && config.plugins.length === 0) return config
+
+  return [
+    ...config.extends.map(extendsPath => inlineExtendsPathAtPath(extendsPath, cwd)),
+    ...config.plugins.map(pluginPath => inlinePluginPathAtPath(pluginPath, cwd)),
+    {
+      ...config,
+      plugins: [],
+      extends: []
+    }
+  ].reduce(merge, emptyConfig)
+}
+
+function inlineExtendsPathAtPath(extendsPath, cwd) {
+  const config = requireConfig(extendsPath, cwd)
+  const extendsCwd = path.join(cwd, extendsPath)
+  return inlineConfigAtPath(config, extendsCwd)
+}
+
+function inlinePluginPathAtPath(pluginPath, cwd) {
+  const config = requireConfig(normalizePluginName(pluginPath), cwd)
+  const pluginCwd = path.join(cwd, pluginPath)
+  return inlineConfigAtPath(config, pluginCwd)
+}
+
+function requireConfig(configPath, relativeTo) {
+  const config = relativeTo ? relative(configPath, relativeTo) : require(configPath)
+  return normalizeConfig(config)
+}
+
+function resolveConfig(configPath, relativeTo) {
+  return relativeTo ? relative.resolve(configPath, relativeTo) : require.resolve(configPath);
+}
+
+function merge (configA, configB) {
+  if (!(mergeable(configA) && mergeable(configB))) {
+    throw new Error('Cannot merge configs with extends or plugins' + JSON.stringify(configA) + JSON.stringify(configB))
+  }
 
   return {
-    ...inlinedConfigA,
-    ...inlinedConfigB,
+    ...configA,
+    ...configB,
     env: mergeEnvs(configA.env, configB.env),
-    rules: mergeRules(inlinedConfigA.rules, inlinedConfigB.rules)
+    rules: mergeRules(configA.rules, configB.rules)
   }
 }
 
-function inlineConfig (config) {
-  if (config.plugins.length === 0) return config
-
-  return [
-    ...config.plugins.map(resolvePlugin).map(normalizeConfig).map(inlineConfig),
-    omit(config, 'plugins')
-  ].reduce(merge, {})
-}
-
-function resolvePlugin (pluginName) {
-  return require(normalizePluginName(pluginName))
+function mergeable(config) {
+  return config.extends.length === 0 && config.plugins.length === 0;
 }
 
 function mergeEnvs (envA, envB) {
@@ -43,6 +81,7 @@ function normalizeConfig (config) {
   return {
     ...config,
     env: config.env || {},
+    extends: config.extends || [],
     plugins: config.plugins || [],
     rules: config.rules || {}
   }

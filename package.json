@@ -51,7 +51,8 @@
   "jest": {
     "testPathDirs": [
       "<rootDir>/src/"
-    ]
+    ],
+    "testRegex": "__tests__/.*-test.js"
   },
   "standard": {
     "env": [
@@ -59,6 +60,6 @@
     ]
   },
   "dependencies": {
-    "lodash": "^4.16.4"
+    "require-relative": "^0.8.7"
   }
 }
