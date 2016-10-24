@@ -1,9 +1,9 @@
-# merge-eslint-configs
+# inline-eslint-config
 
-[![Build Status](https://travis-ci.org/skateshop/merge-eslint-configs.svg?branch=master)](https://travis-ci.org/skateshop/merge-eslint-configs)
-[![Coverage Status](https://coveralls.io/repos/github/skateshop/merge-eslint-configs/badge.svg)](https://coveralls.io/github/skateshop/merge-eslint-configs)
-[![Dependency Status](https://david-dm.org/skateshop/merge-eslint-configs.svg)](https://david-dm.org/skateshop/merge-eslint-configs)
-[![devDependency Status](https://david-dm.org/skateshop/merge-eslint-configs/dev-status.svg)](https://david-dm.org/skateshop/merge-eslint-configs#info=devDependencies)
+[![Build Status](https://travis-ci.org/skateshop/inline-eslint-config.svg?branch=master)](https://travis-ci.org/skateshop/inline-eslint-config)
+[![Coverage Status](https://coveralls.io/repos/github/skateshop/inline-eslint-config/badge.svg)](https://coveralls.io/github/skateshop/inline-eslint-config)
+[![Dependency Status](https://david-dm.org/skateshop/inline-eslint-config.svg)](https://david-dm.org/skateshop/inline-eslint-config)
+[![devDependency Status](https://david-dm.org/skateshop/inline-eslint-config/dev-status.svg)](https://david-dm.org/skateshop/inline-eslint-config#info=devDependencies)
 
-Merges and inlines ESLint configs to simplify ESLint plugin development and
+Inlines an ESLint config object to simplify ESLint plugin development and
 consumption.
