@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "Inlines an ESLint config object to simplify ESLint plugin development and consumption.",
   "repository": "skateshop/inline-eslint-config",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "standard .",
-    "test:unit": "jest"
+    "build": "npm run build:commonjs",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "check": "npm run lint && npm run test",
+    "clean": "rimraf lib",
+    "lint": "standard .",
+    "prepublish": "npm run clean && npm run check && npm run build",
+    "test": "cross-env BABEL_ENV=commonjs jest"
   },
   "keywords": [
     "eslint"
@@ -15,18 +19,34 @@
   "author": "Andrew Hutchings <andrew.hutchings@gmail.com> (https://andrewhutchings.com)",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.16.0",
     "babel-jest": "^16.0.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.16.0",
     "babel-polyfill": "^6.16.0",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
+    "cross-env": "^3.1.3",
     "jest": "^16.0.1",
+    "rimraf": "^2.5.4",
     "standard": "^8.4.0"
   },
   "babel": {
     "presets": [
       "stage-0",
       "latest"
-    ]
+    ],
+    "env": {
+      "commonjs": {
+        "plugins": [
+          [
+            "transform-es2015-modules-commonjs",
+            {
+              "loose": true
+            }
+          ]
+        ]
+      }
+    }
   },
   "jest": {
     "testPathIgnorePatterns": [
