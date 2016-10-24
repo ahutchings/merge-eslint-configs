@@ -49,8 +49,8 @@
     }
   },
   "jest": {
-    "testPathIgnorePatterns": [
-      "<rootDir>/.c9/"
+    "testPathDirs": [
+      "<rootDir>/src/"
     ]
   },
   "standard": {
