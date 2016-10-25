@@ -56,22 +56,16 @@ function merge (configA, configB) {
   return {
     ...configA,
     ...configB,
-    env: mergeEnvs(configA.env, configB.env),
-    rules: mergeRules(configA.rules, configB.rules)
+    env: assign(configA.env, configB.env),
+    rules: assign(configA.rules, configB.rules),
+    settings: assign(configA.settings, configB.settings)
   }
 }
 
-function mergeEnvs (envA, envB) {
+function assign (objectA, objectB) {
   return {
-    ...envA,
-    ...envB
-  }
-}
-
-function mergeRules (rulesA, rulesB) {
-  return {
-    ...rulesA,
-    ...rulesB
+    ...objectA,
+    ...objectB
   }
 }
 
@@ -81,7 +75,8 @@ function normalizeConfig (config) {
     env: config.env || {},
     extends: config.extends || [],
     plugins: config.plugins || [],
-    rules: config.rules || {}
+    rules: config.rules || {},
+    settings: config.settings || {}
   }
 }
 

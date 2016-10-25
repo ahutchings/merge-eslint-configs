@@ -7,7 +7,8 @@ it('should inline an empty config', () => {
     env: {},
     extends: [],
     plugins: [],
-    rules: {}
+    rules: {},
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -22,7 +23,8 @@ it('should inline configs with no overlapping rules', () => {
     rules: {
       'no-cond-assign': 'error',
       'no-console': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -36,7 +38,8 @@ it('should inline a plugin', () => {
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -50,7 +53,8 @@ it('should inline a plugin with short name', () => {
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -66,7 +70,8 @@ it('should merge env', () => {
     },
     extends: [],
     plugins: [],
-    rules: {}
+    rules: {},
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -80,7 +85,8 @@ it('should inline a module referenced in extends', () => {
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -94,7 +100,8 @@ it('should inline a module referenced in extends using a short name', () => {
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -109,7 +116,8 @@ it('should recursively inline modules referenced in extends', () => {
     rules: {
       'no-cond-assign': 'error',
       'no-console': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -124,7 +132,8 @@ it('should recursively inline modules referenced in extends with a flattened nod
     rules: {
       'no-cond-assign': 'error',
       'no-console': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -138,7 +147,8 @@ it('should inline an extends value defined as a string', () => {
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
-    }
+    },
+    settings: {}
   }
 
   expect(actual).toEqual(expected)
@@ -152,6 +162,23 @@ it('should inline extends values that have been fully resolved', () => {
     plugins: [],
     rules: {
       'no-cond-assign': 'error'
+    },
+    settings: {}
+  }
+
+  expect(actual).toEqual(expected)
+})
+
+it('should merge settings', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/merge-settings'))
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {},
+    settings: {
+      settingFromRootConfig: true,
+      settingFromMyConfig: true
     }
   }
 
