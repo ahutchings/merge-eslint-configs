@@ -239,4 +239,4 @@ it('should merge parserOptions', () => {
   }
 
   expect(actual).toEqual(expected)
-});
+})

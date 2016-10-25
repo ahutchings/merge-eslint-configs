@@ -10,6 +10,7 @@
     "check": "npm run lint && npm run test",
     "clean": "rimraf lib",
     "lint": "standard",
+    "lint:fix": "standard --fix",
     "prepublish": "npm run clean && npm run check && npm run build",
     "test": "cross-env BABEL_ENV=commonjs jest"
   },
