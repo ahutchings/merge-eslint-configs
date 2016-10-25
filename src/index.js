@@ -1,4 +1,5 @@
 import path from 'path'
+import {assign, merge} from 'lodash/fp'
 import relative from 'require-relative'
 
 const emptyConfig = normalizeConfig({})
@@ -22,7 +23,7 @@ function inlineConfigAtPath (config, cwd) {
       plugins: [],
       extends: []
     }
-  ].reduce(merge, emptyConfig)
+  ].reduce(mergeConfigs, emptyConfig)
 }
 
 function mapExtends (iteratee, collection) {
@@ -52,21 +53,19 @@ function resolveConfig (configPath, relativeTo) {
   return relativeTo ? relative.resolve(configPath, relativeTo) : require.resolve(configPath)
 }
 
-function merge (configA, configB) {
+function mergeConfigs (configA, configB) {
   return {
     ...configA,
     ...configB,
     env: assign(configA.env, configB.env),
     rules: assign(configA.rules, configB.rules),
-    settings: assign(configA.settings, configB.settings)
+    settings: assign(configA.settings, configB.settings),
+    parserOptions: merge(configA.parserOptions, configB.parserOptions)
   }
 }
 
-function assign (objectA, objectB) {
-  return {
-    ...objectA,
-    ...objectB
-  }
+const defaultParserOptions = {
+  ecmaFeatures: {}
 }
 
 function normalizeConfig (config) {
@@ -76,7 +75,8 @@ function normalizeConfig (config) {
     extends: config.extends || [],
     plugins: config.plugins || [],
     rules: config.rules || {},
-    settings: config.settings || {}
+    settings: config.settings || {},
+    parserOptions: merge(defaultParserOptions, config.parserOptions)
   }
 }
 

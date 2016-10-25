@@ -8,7 +8,10 @@ it('should inline an empty config', () => {
     extends: [],
     plugins: [],
     rules: {},
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -24,7 +27,10 @@ it('should inline configs with no overlapping rules', () => {
       'no-cond-assign': 'error',
       'no-console': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -39,7 +45,10 @@ it('should inline a plugin', () => {
     rules: {
       'no-cond-assign': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -54,7 +63,10 @@ it('should inline a plugin with short name', () => {
     rules: {
       'no-cond-assign': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -71,7 +83,10 @@ it('should merge env', () => {
     extends: [],
     plugins: [],
     rules: {},
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -86,7 +101,10 @@ it('should inline a module referenced in extends', () => {
     rules: {
       'no-cond-assign': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -101,7 +119,10 @@ it('should inline a module referenced in extends using a short name', () => {
     rules: {
       'no-cond-assign': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -117,7 +138,10 @@ it('should recursively inline modules referenced in extends', () => {
       'no-cond-assign': 'error',
       'no-console': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -133,7 +157,10 @@ it('should recursively inline modules referenced in extends with a flattened nod
       'no-cond-assign': 'error',
       'no-console': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -148,7 +175,10 @@ it('should inline an extends value defined as a string', () => {
     rules: {
       'no-cond-assign': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -163,7 +193,10 @@ it('should inline extends values that have been fully resolved', () => {
     rules: {
       'no-cond-assign': 'error'
     },
-    settings: {}
+    settings: {},
+    parserOptions: {
+      ecmaFeatures: {}
+    }
   }
 
   expect(actual).toEqual(expected)
@@ -179,8 +212,31 @@ it('should merge settings', () => {
     settings: {
       settingFromRootConfig: true,
       settingFromMyConfig: true
+    },
+    parserOptions: {
+      ecmaFeatures: {}
     }
   }
 
   expect(actual).toEqual(expected)
 })
+
+it('should merge parserOptions', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/merge-parser-options'))
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {},
+    settings: {},
+    parserOptions: {
+      ecmaVersion: 6,
+      ecmaFeatures: {
+        globalReturn: true,
+        jsx: true
+      }
+    }
+  }
+
+  expect(actual).toEqual(expected)
+});
