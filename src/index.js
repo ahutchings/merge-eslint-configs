@@ -3,7 +3,7 @@ import relative from 'require-relative'
 
 const emptyConfig = normalizeConfig({})
 
-export default function inlineRootConfigAtPath(configPath) {
+export default function inlineRootConfigAtPath (configPath) {
   const resolvedPath = resolveConfig(configPath)
   const config = requireConfig(resolvedPath)
   const cwd = path.dirname(resolvedPath)
@@ -11,7 +11,7 @@ export default function inlineRootConfigAtPath(configPath) {
   return inlineConfigAtPath(config, cwd)
 }
 
-function inlineConfigAtPath(config, cwd) {
+function inlineConfigAtPath (config, cwd) {
   if (config.extends.length === 0 && config.plugins.length === 0) return config
 
   return [
@@ -29,7 +29,7 @@ function mapExtends (iteratee, collection) {
   return (Array.isArray(collection) ? collection : [collection]).map(iteratee)
 }
 
-function inlineExtendsPathAtPath(extendsPath, cwd) {
+function inlineExtendsPathAtPath (extendsPath, cwd) {
   const normalizedPath = normalizeExtendsName(extendsPath)
   const resolvedPath = resolveConfig(normalizedPath, cwd)
   const config = requireConfig(normalizedPath, cwd)
@@ -37,19 +37,19 @@ function inlineExtendsPathAtPath(extendsPath, cwd) {
   return inlineConfigAtPath(config, extendsCwd)
 }
 
-function inlinePluginPathAtPath(pluginPath, cwd) {
+function inlinePluginPathAtPath (pluginPath, cwd) {
   const config = requireConfig(normalizePluginName(pluginPath), cwd)
   const pluginCwd = path.join(cwd, pluginPath)
   return inlineConfigAtPath(config, pluginCwd)
 }
 
-function requireConfig(configPath, relativeTo) {
+function requireConfig (configPath, relativeTo) {
   const config = relativeTo ? relative(configPath, relativeTo) : require(configPath)
   return normalizeConfig(config)
 }
 
-function resolveConfig(configPath, relativeTo) {
-  return relativeTo ? relative.resolve(configPath, relativeTo) : require.resolve(configPath);
+function resolveConfig (configPath, relativeTo) {
+  return relativeTo ? relative.resolve(configPath, relativeTo) : require.resolve(configPath)
 }
 
 function merge (configA, configB) {
@@ -65,8 +65,8 @@ function merge (configA, configB) {
   }
 }
 
-function mergeable(config) {
-  return config.extends.length === 0 && config.plugins.length === 0;
+function mergeable (config) {
+  return config.extends.length === 0 && config.plugins.length === 0
 }
 
 function mergeEnvs (envA, envB) {
@@ -104,6 +104,6 @@ function normalizePluginName (pluginName) {
   return `eslint-plugin-${pluginName}`
 }
 
-function isRelativePath(path) {
+function isRelativePath (path) {
   return path.startsWith('./')
 }

@@ -1,8 +1,8 @@
-import path from 'path';
+import path from 'path'
 import inline from '../'
 
 it('should inline an empty config', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/empty'));
+  const actual = inline(path.join(__dirname, 'fixtures/empty'))
   const expected = {
     env: {},
     extends: [],
@@ -14,7 +14,7 @@ it('should inline an empty config', () => {
 })
 
 it('should inline configs with no overlapping rules', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/no-overlapping-rules'));
+  const actual = inline(path.join(__dirname, 'fixtures/no-overlapping-rules'))
   const expected = {
     env: {},
     extends: [],
@@ -29,7 +29,7 @@ it('should inline configs with no overlapping rules', () => {
 })
 
 it('should inline a plugin', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/plugin'));
+  const actual = inline(path.join(__dirname, 'fixtures/plugin'))
   const expected = {
     env: {},
     extends: [],
@@ -43,7 +43,7 @@ it('should inline a plugin', () => {
 })
 
 it('should inline a plugin with short name', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/plugin-short-name'));
+  const actual = inline(path.join(__dirname, 'fixtures/plugin-short-name'))
   const expected = {
     env: {},
     extends: [],
@@ -57,7 +57,7 @@ it('should inline a plugin with short name', () => {
 })
 
 it('should merge env', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/env'));
+  const actual = inline(path.join(__dirname, 'fixtures/env'))
   const expected = {
     env: {
       node: true,
@@ -73,7 +73,7 @@ it('should merge env', () => {
 })
 
 it('should inline a module referenced in extends', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/extends-module'));
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module'))
   const expected = {
     env: {},
     extends: [],
@@ -87,7 +87,7 @@ it('should inline a module referenced in extends', () => {
 })
 
 it('should inline a module referenced in extends using a short name', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/extends-module-short-name'));
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module-short-name'))
   const expected = {
     env: {},
     extends: [],
@@ -101,7 +101,7 @@ it('should inline a module referenced in extends using a short name', () => {
 })
 
 it('should recursively inline modules referenced in extends', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/extends-module-recursive'));
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module-recursive'))
   const expected = {
     env: {},
     extends: [],
@@ -116,7 +116,7 @@ it('should recursively inline modules referenced in extends', () => {
 })
 
 it('should recursively inline modules referenced in extends with a flattened node_modules', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/extends-module-recursive-flattened'));
+  const actual = inline(path.join(__dirname, 'fixtures/extends-module-recursive-flattened'))
   const expected = {
     env: {},
     extends: [],
@@ -131,7 +131,7 @@ it('should recursively inline modules referenced in extends with a flattened nod
 })
 
 it('should inline an extends value defined as a string', () => {
-  const actual = inline(path.join(__dirname, 'fixtures/string-extends'));
+  const actual = inline(path.join(__dirname, 'fixtures/string-extends'))
   const expected = {
     env: {},
     extends: [],
