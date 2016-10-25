@@ -53,20 +53,12 @@ function resolveConfig (configPath, relativeTo) {
 }
 
 function merge (configA, configB) {
-  if (!(mergeable(configA) && mergeable(configB))) {
-    throw new Error('Cannot merge configs with extends or plugins' + JSON.stringify(configA) + JSON.stringify(configB))
-  }
-
   return {
     ...configA,
     ...configB,
     env: mergeEnvs(configA.env, configB.env),
     rules: mergeRules(configA.rules, configB.rules)
   }
-}
-
-function mergeable (config) {
-  return config.extends.length === 0 && config.plugins.length === 0
 }
 
 function mergeEnvs (envA, envB) {
