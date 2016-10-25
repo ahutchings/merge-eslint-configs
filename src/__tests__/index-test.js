@@ -143,3 +143,17 @@ it('should inline an extends value defined as a string', () => {
 
   expect(actual).toEqual(expected)
 })
+
+it('should inline extends values that have been fully resolved', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/resolved-extends'))
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {
+      'no-cond-assign': 'error'
+    }
+  }
+
+  expect(actual).toEqual(expected)
+})

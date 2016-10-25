@@ -94,7 +94,7 @@ function normalizeConfig (config) {
 }
 
 function normalizeExtendsName (extendsName) {
-  if (isRelativePath(extendsName)) return extendsName
+  if (isRelativePath(extendsName) || path.isAbsolute(extendsName)) return extendsName
   if (extendsName.startsWith('eslint-config-')) return extendsName
   return `eslint-config-${extendsName}`
 }
