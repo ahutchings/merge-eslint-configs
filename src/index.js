@@ -15,7 +15,7 @@ function inlineConfigAtPath(config, cwd) {
   if (config.extends.length === 0 && config.plugins.length === 0) return config
 
   return [
-    ...config.extends.map(extendsPath => inlineExtendsPathAtPath(extendsPath, cwd)),
+    ...mapExtends(extendsPath => inlineExtendsPathAtPath(extendsPath, cwd), config.extends),
     ...config.plugins.map(pluginPath => inlinePluginPathAtPath(pluginPath, cwd)),
     {
       ...config,
@@ -23,6 +23,10 @@ function inlineConfigAtPath(config, cwd) {
       extends: []
     }
   ].reduce(merge, emptyConfig)
+}
+
+function mapExtends (iteratee, collection) {
+  return (Array.isArray(collection) ? collection : [collection]).map(iteratee)
 }
 
 function inlineExtendsPathAtPath(extendsPath, cwd) {

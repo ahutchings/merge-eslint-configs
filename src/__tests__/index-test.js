@@ -129,3 +129,17 @@ it('should recursively inline modules referenced in extends with a flattened nod
 
   expect(actual).toEqual(expected)
 })
+
+it('should inline an extends value defined as a string', () => {
+  const actual = inline(path.join(__dirname, 'fixtures/string-extends'));
+  const expected = {
+    env: {},
+    extends: [],
+    plugins: [],
+    rules: {
+      'no-cond-assign': 'error'
+    }
+  }
+
+  expect(actual).toEqual(expected)
+})
